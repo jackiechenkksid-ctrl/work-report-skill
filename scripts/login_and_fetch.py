@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-青鸾系统 - 自动登录 & 考勤数据拉取脚本
+公司内部系统 - 自动登录 & 数据拉取脚本
 用法: python3 login_and_fetch.py <username> <password> [--date 20260603] [--range 20260601-20260605]
 """
 
@@ -15,7 +15,7 @@ CLIENT_SECRET = "111111"
 
 
 def login(username: str, password: str) -> str:
-    """登录青鸾系统，返回 access_token"""
+    """登录系统，返回 access_token"""
     session = requests.Session()
     session.verify = False
 
@@ -92,7 +92,7 @@ def format_output(data: dict, start_date: str, end_date: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="青鸾系统考勤数据拉取")
+    parser = argparse.ArgumentParser(description="考勤数据拉取")
     parser.add_argument("username", help="登录用户名")
     parser.add_argument("password", help="登录密码")
     parser.add_argument("--date", help="单日查询，格式 yyyyMMdd，如 20260603")

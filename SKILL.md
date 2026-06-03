@@ -141,7 +141,7 @@ python3 scripts/login_and_fetch.py <username> <password> --range 20260601-202606
 
 **Step 4：脚本不匹配时 → API 自动探测协议**
 
-如果用户系统没有现成脚本，AI 必须按以下流程**自动逆向工程**系统 API。这是从青鸾系统实战中沉淀的方法论。
+如果用户系统没有现成脚本，AI 必须按以下流程**自动逆向工程**系统 API。这是从实战中沉淀的方法论。
 
 **4.1 页面入口探测**
 
@@ -455,8 +455,8 @@ python3 scripts/save_report.py <username> <password> \
 
 | 脚本 | 用途 |
 |------|------|
-| `scripts/login_and_fetch.py` | 青鸾系统自动登录 + 考勤数据拉取 |
-| `scripts/save_report.py` | 青鸾系统日报/周报自动保存（草稿/提交） |
+| `scripts/login_and_fetch.py` | 自动登录 + 数据拉取 |
+| `scripts/save_report.py` | 日报/周报自动保存（草稿/提交） |
 
 ## 模板
 

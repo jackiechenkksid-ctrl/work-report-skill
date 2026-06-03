@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-青鸾系统 - 日报/周报保存脚本
+公司内部系统 - 日报/周报保存脚本
 用法:
   python3 save_report.py <username> <password> --daily   "<日报内容>" [--status 0]
   python3 save_report.py <username> <password> --weekly  "<周报内容>" [--status 0]
@@ -144,7 +144,7 @@ def update_daily_report(token: str, date: str, content: str, status: str = "0"):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="青鸾系统日报/周报保存")
+    parser = argparse.ArgumentParser(description="日报/周报保存")
     parser.add_argument("username", help="登录用户名")
     parser.add_argument("password", help="登录密码")
     parser.add_argument("--daily", help="日报内容")
