@@ -13,9 +13,9 @@ import requests
 import urllib3
 urllib3.disable_warnings()
 
-BASE_URL = "https://c.jbufa.com"
-CLIENT_ID = "web"
-CLIENT_SECRET = "111111"
+BASE_URL = "https://<YOUR_SYSTEM_URL>"
+CLIENT_ID = "<YOUR_CLIENT_ID>"
+CLIENT_SECRET = "<YOUR_CLIENT_SECRET>"
 
 
 def login(username: str, password: str) -> str:
