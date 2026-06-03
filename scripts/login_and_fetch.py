@@ -5,13 +5,21 @@
 """
 
 import sys, json, os, argparse, base64
+
+# 确保 scripts/ 目录在 Python 路径中，以便 import config
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import requests
 import urllib3
 urllib3.disable_warnings()
 
-BASE_URL = "https://<YOUR_SYSTEM_URL>"
-CLIENT_ID = "<YOUR_CLIENT_ID>"
-CLIENT_SECRET = "<YOUR_CLIENT_SECRET>"
+# 优先读取本地 config.py（gitignored），不存在时用占位符
+try:
+    from config import BASE_URL, CLIENT_ID, CLIENT_SECRET
+except ImportError:
+    BASE_URL = "https://<YOUR_SYSTEM_URL>"
+    CLIENT_ID = "<YOUR_CLIENT_ID>"
+    CLIENT_SECRET = "<YOUR_CLIENT_SECRET>"
 
 
 def login(username: str, password: str) -> str:
