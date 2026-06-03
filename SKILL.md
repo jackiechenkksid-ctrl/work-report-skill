@@ -109,35 +109,38 @@ AI 解析：
 
 ### 2B. 自动登录公司系统拉取
 
-用户提供公司内部系统 URL 和账号密码时，使用脚本自动登录并拉取数据。
+用户只需提供 **系统 URL + 用户名 + 密码**，其余由 AI 自动完成。
 
-**Step 1：检查是否有专用脚本**
+**Step 1：检查是否已配置**
 
-查看 `scripts/` 目录下是否有对应系统的脚本（如 `scripts/login_and_fetch.py`）。
+查看 `scripts/config.py` 是否存在。如果存在 → 直接跳到 Step 3 运行脚本。
 
-**Step 2：首次使用 — 帮用户配置**
+**Step 2：首次使用 — AI 自动配置**
 
-如果脚本存在但用户从未配置过，询问用户的登录凭据：
+如果 `config.py` 不存在，AI 自动执行以下流程：
 
+```text
+用户只需说："系统是 https://c.jbufa.com，账号 138xxx，密码 xxx"
+
+AI 自动做：
+1. 运行 API 自动探测协议（见下方 Step 4）
+2. 找到 CLIENT_ID + CLIENT_SECRET
+3. 自动生成 scripts/config.py，写入真实值
+4. 验证登录接口能通
+5. 然后直接拉取数据
 ```
-要自动拉取考勤数据，需要你的系统账号。
-建议用环境变量存储（更安全），或直接传入。
-你需要提供：
-- 用户名/手机号
-- 密码
-```
+
+用户全程不需要手动编辑任何配置文件。
 
 **Step 3：运行脚本拉取数据**
 
 ```bash
-# 单日查询（默认今天）
 python3 scripts/login_and_fetch.py <username> <password> --date 20260603
-
-# 日期范围查询（周报）
-python3 scripts/login_and_fetch.py <username> <password> --range 20260601-20260605
 ```
 
-脚本输出 JSON 格式的考勤数据，AI 解析后进入 Phase 3 加工。
+> 密码仅用于本次脚本执行，不会持久化到文件中。
+
+脚本输出 JSON 格式的数据，AI 解析后进入 Phase 3 加工。
 
 **Step 4：脚本不匹配时 → API 自动探测协议**
 
@@ -233,9 +236,18 @@ resp = requests.post(f'{BASE_URL}/api/statement/week', json={}, headers=headers)
 
 再尝试不同字段组合直到返回 code=000。
 
-**4.8 生成脚本**
+**4.8 自动生成 config.py**
 
-接口验证通过后，参照 `scripts/login_and_fetch.py` 模板生成对应系统的脚本，保存到 `scripts/` 目录。
+接口验证通过后，AI 自动创建 `scripts/config.py`，写入已探测到的值：
+
+```python
+# 由 AI 自动生成（gitignored，不会提交到 Git）
+BASE_URL = "https://xxx.com"
+CLIENT_ID = "web"
+CLIENT_SECRET = "111111"
+```
+
+**用户从头到尾只需要提供三样东西：URL + 用户名 + 密码。** 其余全部由 AI 自动完成。
 
 > **核心原则：用 404 vs 500 vs 200 区分接口状态**
 > - 404 → 路径不存在，换路径

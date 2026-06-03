@@ -21,11 +21,18 @@ python3 install.py --trae       # 仅 Trae IDE
 
 ### 3. 使用
 
-在 AI 对话中直接说：
+在 AI 对话中说（首次会自动配置）：
 
-- "帮我写日报"
-- "生成本周周报"
-- "今天的工作总结"
+```text
+# 手动输入工作内容
+"帮我写日报"
+
+# 对接公司系统（首次使用，AI 自动探测接口）
+"帮我写日报，系统是 https://xxx.com，账号 138xxx，密码 xxx"
+```
+
+**你只需提供：URL + 用户名 + 密码。**  
+API 探测、CLIENT_ID、CLIENT_SECRET 等全部由 AI 自动完成。
 
 ---
 
@@ -58,19 +65,13 @@ work-report/
 
 ## 对接你的公司系统
 
-**已有系统：** 某消防行业公司 CRM 系统已适配，有现成脚本可参考。
+你只需告诉 AI：
 
-**新系统：** Skill 内置了完整的 **API 自动探测协议**（SKILL.md Phase 2B Step 4），AI 会自动：
+> "帮我写日报，系统是 https://xxx.com，账号 138xxx，密码 xxx"
 
-1. 抓取首页 HTML → 定位 JS 包
-2. 搜索 `baseURL`、`client_id`、`client_secret`
-3. 验证 OAuth2 登录接口
-4. 探测数据查询/回填接口
-5. 生成新的登录脚本
+AI 自动完成 API 探测、接口验证、配置生成、数据拉取全流程。详见 SKILL.md Phase 2B Step 4 的 API 自动探测协议。
 
-你只需提供系统 URL 和账号密码。
-
-**安全提醒：** 脚本中只存客户端凭证（client_id/secret，来自前端 JS），**不存用户密码**。密码通过命令行传入。
+**安全：** `config.py`（含 CLIENT_ID/SECRET）gitignored 不上传。密码仅用于当次脚本执行，不持久化。
 
 ## 支持平台
 
